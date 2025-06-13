@@ -1,6 +1,7 @@
 package net.esquizo.children_of_silence_mod;
 
 import com.mojang.logging.LogUtils;
+import net.esquizo.children_of_silence_mod.Init.CreativeTabInit;
 import net.esquizo.children_of_silence_mod.Init.ItemInit;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,6 +25,7 @@ public class ChildrenOfSilence {
         IEventBus modEventBus = context.getModEventBus();
 
         ItemInit.register(modEventBus);
+        CreativeTabInit.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
 
