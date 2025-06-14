@@ -1,5 +1,11 @@
 {
   "item.children_of_silence.sting_of_sacrament" : "Sting of Sacrament",
 
-  "creativetab.draken_tab" : "Draken"
+  "item.children_of_silence.elven_katana" : "Elven Katana",
+  "item.children_of_silence.oversized" : "Oversized",
+
+
+
+  "creativetab.draken_tab" : "Draken",
+  "creativetab.hayate_tab" : "Hayate"
 }

@@ -1,4 +1,4 @@
-package net.esquizo.children_of_silence_mod.items;
+package net.esquizo.children_of_silence_mod.items.draken;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

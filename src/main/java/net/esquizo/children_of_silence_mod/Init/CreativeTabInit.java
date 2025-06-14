@@ -21,6 +21,15 @@ public class CreativeTabInit {
                         output.accept(ItemInit.STING_OF_SACRAMENT.get());
                     })
                     .build());
+    public static final RegistryObject<CreativeModeTab> HAYATE_TAB = CREATIVE_MODE_TABS.register("hayate_tab",
+            () -> CreativeModeTab.builder()
+                    .icon(() -> new ItemStack(ItemInit.HAYATE_TAB.get()))
+                    .title(Component.translatable("creativetab.hayate_tab"))
+                    .displayItems((parameters, output) -> {
+                        output.accept(ItemInit.ELVEN_KATANA.get());
+                        output.accept(ItemInit.OVERSIZED.get());
+                    })
+                    .build());
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);

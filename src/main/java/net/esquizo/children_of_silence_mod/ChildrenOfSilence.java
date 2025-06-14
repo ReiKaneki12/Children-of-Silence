@@ -3,6 +3,7 @@ package net.esquizo.children_of_silence_mod;
 import com.mojang.logging.LogUtils;
 import net.esquizo.children_of_silence_mod.Init.CreativeTabInit;
 import net.esquizo.children_of_silence_mod.Init.ItemInit;
+import net.esquizo.children_of_silence_mod.networking.NetworkingHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -19,7 +20,7 @@ import org.slf4j.Logger;
 public class ChildrenOfSilence {
 
     public static final String MOD_ID = "children_of_silence";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public ChildrenOfSilence(FMLJavaModLoadingContext context){
         IEventBus modEventBus = context.getModEventBus();
@@ -34,7 +35,7 @@ public class ChildrenOfSilence {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event){
-
+        NetworkingHandler.register();
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event){
