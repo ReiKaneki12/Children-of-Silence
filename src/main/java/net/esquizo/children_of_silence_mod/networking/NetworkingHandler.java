@@ -1,7 +1,9 @@
 package net.esquizo.children_of_silence_mod.networking;
 
 import net.esquizo.children_of_silence_mod.ChildrenOfSilence;
+import net.esquizo.children_of_silence_mod.networking.packets.OpenSpellMenuC2S;
 import net.esquizo.children_of_silence_mod.networking.packets.SpellRelatedCapabilitySyncS2CPacket;
+import net.esquizo.children_of_silence_mod.networking.packets.UseSpellC2S;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -30,6 +32,16 @@ public class NetworkingHandler {
                 .decoder(SpellRelatedCapabilitySyncS2CPacket::new)
                 .encoder(SpellRelatedCapabilitySyncS2CPacket::toByte)
                 .consumerMainThread(SpellRelatedCapabilitySyncS2CPacket::handle)
+                .add();
+        INSTANCE.messageBuilder(OpenSpellMenuC2S.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(OpenSpellMenuC2S::new)
+                .encoder(OpenSpellMenuC2S::toByte)
+                .consumerMainThread(OpenSpellMenuC2S::handle)
+                .add();
+        INSTANCE.messageBuilder(UseSpellC2S.class, id(), NetworkDirection.PLAY_TO_SERVER)
+                .decoder(UseSpellC2S::new)
+                .encoder(UseSpellC2S::toByte)
+                .consumerMainThread(UseSpellC2S::handle)
                 .add();
     }
 

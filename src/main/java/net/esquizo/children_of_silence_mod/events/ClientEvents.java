@@ -13,5 +13,4 @@ public class ClientEvents {
             ManaOverlay.renderManaBar(event.getGuiGraphics());
         }
     }
-
 }

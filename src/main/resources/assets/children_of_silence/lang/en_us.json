@@ -1,11 +1,23 @@
 {
   "item.children_of_silence.sting_of_sacrament" : "Sting of Sacrament",
+  "item.children_of_silence.cowboy_helmet" : "Cowboy Hat",
+  "item.children_of_silence.cowboy_chestplate" : "Cowboy Coat",
+  "item.children_of_silence.cowboy_leggings" : "Cowboy Pants",
+  "item.children_of_silence.cowboy_boots" : "Cowboy Boots",
 
   "item.children_of_silence.elven_katana" : "Elven Katana",
   "item.children_of_silence.oversized" : "Oversized",
 
+  "item.children_of_silence.spell_item.id_1" : "Fire Ball",
+
 
 
   "creativetab.draken_tab" : "Draken",
-  "creativetab.hayate_tab" : "Hayate"
+  "creativetab.hayate_tab" : "Hayate",
+
+
+  "key.categories.magic.children_of_silence" : "Magic",
+  "key.children_of_silence.spell_menu" : "Open Spell Book",
+  "key.children_of_silence.use_spell" : "Use Spell"
+
 }

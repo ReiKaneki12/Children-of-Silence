@@ -1,6 +1,6 @@
 package net.esquizo.children_of_silence_mod.capabilities.spell_related_capability;
 
-import net.esquizo.children_of_silence_mod.ChildrenOfSilence;
+import net.esquizo.children_of_silence_mod.utils.MagicUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -9,14 +9,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.INBTSerializable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SpellRelatedCapability implements ISpellRelatedCapability, INBTSerializable<CompoundTag> {
     private float mana = 20;
     private float maxMana = 20;
     private float manaRegenRate = 5;
-    private Map<Integer, Integer> knownSpellIds = new HashMap<>();
+    private List<Integer> knownSpellIds = new ArrayList<>();
     private int spellMemory = 5;
     private Map<Integer, Integer> equippedSpellIds = new HashMap<>();
     private int selectedSpellSlot = 1;
@@ -54,7 +53,8 @@ public class SpellRelatedCapability implements ISpellRelatedCapability, INBTSeri
     }
 
     @Override
-    public Map<Integer, Integer> knownSpellIds() {
+    public List<Integer> knownSpellIds() {
+        fixSpellMemoryList();
         return this.knownSpellIds;
     }
 
@@ -65,17 +65,15 @@ public class SpellRelatedCapability implements ISpellRelatedCapability, INBTSeri
 
     @Override
     public boolean knowsSpell(int spellId) {
-        return this.knownSpellIds.containsValue(spellId);
+        return this.knownSpellIds.contains(spellId);
     }
 
     @Override
     public void learnSpell(int spellId, Player player) {
-        if(!knownSpellIds().containsValue(spellId)) {
-            for (int i = 1; i <= getSpellMemory(); i++) {
-                if (!knownSpellIds().containsKey(i)) {
-                    this.knownSpellIds.put(i, spellId);
-                    return;
-                }
+        if(!knownSpellIds().contains(spellId)) {
+            if(knownSpellIds().size() < getSpellMemory()){
+                this.knownSpellIds.add(spellId);
+                return;
             }
             player.displayClientMessage(Component.literal("No memory left for learning this spell!").withStyle(ChatFormatting.DARK_RED), true);
         }
@@ -83,8 +81,8 @@ public class SpellRelatedCapability implements ISpellRelatedCapability, INBTSeri
 
     @Override
     public void forgetSpell(int spellId) {
-        if(knownSpellIds().containsValue(spellId)){
-            knownSpellIds().entrySet().removeIf(entry -> entry.getValue().equals(spellId));
+        if(knownSpellIds().contains(spellId)){
+            knownSpellIds.remove(spellId);
         }
     }
 
@@ -169,14 +167,7 @@ public class SpellRelatedCapability implements ISpellRelatedCapability, INBTSeri
         tag.putFloat("maxMana", this.maxMana);
         tag.putFloat("manaRegenRate", this.manaRegenRate);
 
-        ListTag knowSpellIds = new ListTag();
-        for(Map.Entry<Integer, Integer> entry : this.knownSpellIds.entrySet()){
-            CompoundTag entryTag = new CompoundTag();
-            entryTag.putInt("key", entry.getKey());
-            entryTag.putInt("value", entry.getValue());
-            knowSpellIds.add(entryTag);
-        }
-        tag.put("knowSpellsId", knowSpellIds);
+        tag.putIntArray("knowSpellsId", this.knownSpellIds.stream().mapToInt(Integer::intValue).toArray());
 
         tag.putInt("spellMemory", this.spellMemory);
 
@@ -210,15 +201,7 @@ public class SpellRelatedCapability implements ISpellRelatedCapability, INBTSeri
         this.maxMana = tag.getFloat("maxMana");
         this.manaRegenRate = tag.getFloat("manaRegenRate");
 
-        if (tag.contains("knowSpellsId", Tag.TAG_LIST)) {
-            ListTag listTag = tag.getList("knowSpellsId", Tag.TAG_COMPOUND);
-            for (Tag listEntry : listTag) {
-                CompoundTag entryTag = (CompoundTag) listEntry;
-                int key = entryTag.getInt("key");
-                int value = entryTag.getInt("value");
-                this.knownSpellIds.put(key, value);
-            }
-        }
+        this.knownSpellIds = new ArrayList<>(Arrays.stream(tag.getIntArray("knowSpellsId")).boxed().toList());
 
         this.spellMemory = tag.getInt("spellMemory");
 
@@ -250,11 +233,15 @@ public class SpellRelatedCapability implements ISpellRelatedCapability, INBTSeri
         this.mana = other.mana;
         this.maxMana = other.maxMana;
         this.manaRegenRate = other.manaRegenRate;
-        this.knownSpellIds = new HashMap<>(other.knownSpellIds);
+        this.knownSpellIds = new ArrayList<>(other.knownSpellIds);
         this.spellMemory = other.spellMemory;
         this.equippedSpellIds = new HashMap<>(other.equippedSpellIds);
         this.selectedSpellSlot = other.selectedSpellSlot;
         this.maxSpellSlots = other.maxSpellSlots;
         this.spellCooldowns = new HashMap<>(other.spellCooldowns);
+    }
+
+    private void fixSpellMemoryList(){
+        this.knownSpellIds = MagicUtils.removeSpellDuplicates(this.knownSpellIds);
     }
 }

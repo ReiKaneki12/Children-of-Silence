@@ -16,10 +16,10 @@ public interface ISpellRelatedCapability {
     void manaRegenTick();
 
     // === Known Spells ===
-    Map<Integer, Integer> knownSpellIds();              // <Memory slot, Spell ID>
+    List<Integer> knownSpellIds();                      // Get a List with all know spells Ids
     int getSpellMemory();                               // Get the max amount of spells you can learn
     boolean knowsSpell(int spellId);                    // Knows the spells
-    void learnSpell(int spellId, Player player);                       // Learn a spell
+    void learnSpell(int spellId, Player player);        // Learn a spell
     void forgetSpell(int spellId);                      // Forget a spell
     void setSpellMemory(int memory);                    // Set the spell memory
 

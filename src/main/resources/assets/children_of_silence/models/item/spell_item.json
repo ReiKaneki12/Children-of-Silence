@@ -1,0 +1,20 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minecraft:item/barrier"
+  },
+  "overrides": [
+    {
+      "predicate": { "spell_id": 1 },
+      "model": "children_of_silence:item/spells/fire_ball_spell"
+    },
+    {
+      "predicate": { "spell_id": 2 },
+      "model": "children_of_silence:item/spell_item_2"
+    },
+    {
+      "predicate": { "spell_id": 3 },
+      "model": "children_of_silence:item/spell_item_3"
+    }
+  ]
+}

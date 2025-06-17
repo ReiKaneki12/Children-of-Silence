@@ -19,6 +19,10 @@ public class CreativeTabInit {
                     .title(Component.translatable("creativetab.draken_tab"))
                     .displayItems((parameters, output) -> {
                         output.accept(ItemInit.STING_OF_SACRAMENT.get());
+                        output.accept(ItemInit.COWBOY_HELMET.get());
+                        output.accept(ItemInit.COWBOY_CHESTPLATE.get());
+                        output.accept(ItemInit.COWBOY_LEGGINGS.get());
+                        output.accept(ItemInit.COWBOY_BOOTS.get());
                     })
                     .build());
     public static final RegistryObject<CreativeModeTab> HAYATE_TAB = CREATIVE_MODE_TABS.register("hayate_tab",
